@@ -1,12 +1,5 @@
-res_abstract/as_dict.yaml
-res_abstract/ass.yaml
-res_abstract/indexed_ass.yaml
-res_initial/reference_ass.yaml
-res_initial/reference.txt
-data/ids_lv2.txt
-data/ies20220126.txt
-data/ambiguous.yaml
-data/unification.yaml
+abstract/
+initial/
 
 __pycache__/
 *.py[cod]
