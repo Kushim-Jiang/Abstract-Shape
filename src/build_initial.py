@@ -134,7 +134,8 @@ class InitialBuilder:
         self.INIT_CODEPOINT = init
         self.FINA_CODEPOINT = fina
 
-        os.mkdir("initial/")
+        if not os.path.exists("initial/"):
+            os.mkdir("initial/")
 
         ids_dict = self.build_ids_dict("data/ids_lv2.txt")
         # ids_dict = self.build_ids_dict("initial/built_ids.yaml")

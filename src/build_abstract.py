@@ -144,8 +144,10 @@ class AbstractBuilder:
                     f_temp.write("".join(val) + "\n")
 
     def __init__(self) -> None:
-        os.mkdir("abstract/")
-        os.mkdir("result/")
+        if not os.path.exists("abstract/"):
+            os.mkdir("abstract/")
+        if not os.path.exists("result/"):
+            os.mkdir("result/")
 
         parsed_ass_dict = self.parse_ass_dict_from_yamls(
             ["input/abstract_shape_main.yaml", "input/abstract_shape_a.yaml", "input/abstract_shape_comp.yaml", "input/abstract_shape_b.yaml"]
