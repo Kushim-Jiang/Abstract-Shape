@@ -13,6 +13,17 @@ def _load(path: str):
         return yaml.load(f, Loader=yaml.FullLoader)
 
 
+def _merge(dict_1: dict, dict_2: dict):
+    res = {}
+    for key in dict_1.keys() | dict_2.keys():
+        res[key] = (
+            ("" if key not in dict_1.keys() else dict_1.get(key))
+            + ("; " if key in dict_1.keys() & dict_2.keys() else "")
+            + ("" if key not in dict_2.keys() else dict_2.get(key))
+        )
+    return res
+
+
 def _dump(path: str, obj):
     with open(path, "w", encoding="utf-8") as f:
         yaml.dump(obj, f, indent=4, allow_unicode=True)
@@ -37,10 +48,11 @@ def _sub(src: str, amb_dict: dict[str, str]) -> str:
 
 
 def _get_uni(src: str, uni_dict: dict[str, str]) -> str:
+    res = ""
     for key, val in uni_dict.items():
         if src in key:
-            return key + ": " + val
-    return ""
+            res += key + ": " + val + "; "
+    return res[:-2]
 
 
 class InitialBuilder:
@@ -143,7 +155,7 @@ class InitialBuilder:
         cog_dict = self.build_cognition_dict("data/ies20220126.txt")
         # cog_dict = self.build_cognition_dict("initial/built_cognition.yaml")
 
-        uni_dict = _load("data/unification.yaml")
+        uni_dict = _merge(_load("data/unify_eiso.yaml"), _load("data/similar_fei.yaml"))
         amb_dict = _load("data/ambiguous.yaml")
         ass_reference = self.build_reference_ass(ids_dict, cog_dict, uni_dict, amb_dict, range(self.INIT_CODEPOINT, self.FINA_CODEPOINT + 1))
 
